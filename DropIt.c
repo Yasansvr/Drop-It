@@ -28,8 +28,7 @@ int main(void)
     float speed = 50.0f;
     float x,y;
     float timescore = GetFrameTime();
-    const float startSeconds = 20.0f;
-    float timeLeft = startSeconds;
+    float timeLeft;
     Vector2 red = {x,y};
     Vector2 blue = {x,y};
     
@@ -51,7 +50,7 @@ int main(void)
             draw = false;
             redwin = false;
             bluewin = false;
-            timeLeft = 20.0f;
+            timeLeft = 10.0f;
             redscore = 0;
             bluescore = 0;
             start = true;
@@ -63,17 +62,34 @@ int main(void)
             timeLeft -= GetFrameTime(); 
             if (timeLeft < 0.0f) timeLeft = 0.0f;  
             }
-            if (timeLeft <= 0 && (redscore==0 && bluescore==0))
+            if (timeLeft <= 0 && (redscore==0 && bluescore==0)|| timeLeft <= 0 && (redscore == bluescore))
             {
                 draw = true;
             }
             if (draw)
             {
                 start = false;
+                shot = false;
+                shotblue = false;
+                Circle1.x =300, Circle1.y= 400;
+                Circle2.x = 500, Circle2.y = 400;
+
             }
             
-            if (timeLeft == 0 && redscore > bluescore) redwin=true;
-            if (timeLeft == 0 && redscore < bluescore) bluewin=true;
+            if (timeLeft == 0 && redscore > bluescore) {
+                redwin=true;
+                shot = false;
+                shotblue = false;
+                Circle1.x =300, Circle1.y= 400;
+                Circle2.x = 500, Circle2.y = 400;
+            }
+            if (timeLeft == 0 && redscore < bluescore) {
+                bluewin=true;
+                shot = false;
+                shotblue = false;
+                Circle1.x =300, Circle1.y= 400;
+                Circle2.x = 500, Circle2.y = 400;
+            }
             if (timeLeft > 0 )
             {
                 if (CheckCollisionCircles(Circle1, 10, blue, 10)) bluescore++;
@@ -123,6 +139,13 @@ int main(void)
             }
 
             if (start){
+                for (int y = 0; y <=800; y+=40)
+                {
+                    for (int x = 0; x <= 800; x+=40)
+                    {
+                        DrawRectangleLines(y,x, 40, 40, DARKGRAY);
+                    }
+                }
                 DrawTextEx(GetFontDefault(),TextFormat("Time : %.1f",timeLeft),(Vector2){20,20},20,3,WHITE);
                 DrawTextEx(GetFontDefault(),TextFormat("Blue : %d",bluescore),(Vector2){20,60},20,3,BLUE);
                 DrawTextEx(GetFontDefault(),TextFormat("Red : %d",redscore),(Vector2){20,100},20,3,RED);
