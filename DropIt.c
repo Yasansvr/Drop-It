@@ -50,7 +50,7 @@ int main(void)
             draw = false;
             redwin = false;
             bluewin = false;
-            timeLeft = 10.0f;
+            timeLeft = 25.0f;
             redscore = 0;
             bluescore = 0;
             start = true;
