@@ -56,6 +56,6 @@
 - C compiler (gcc or clang)
 - raylib installed
 
-### Compile
+### Compile & RUN
 ```bash
-gcc Dropit.c -o Dropit -lraylib -lm -ldl -lpthread -lX11 && ./Dropit
+gcc DropIt.c -o DropIt -lraylib -lm -ldl -lpthread -lX11 && ./DropIt
