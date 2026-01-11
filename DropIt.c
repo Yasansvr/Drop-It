@@ -19,6 +19,8 @@ int main(void)
     bool draw =false;
     bool bluewin = false;
     bool redwin = false;
+    bool cscorered = false;
+    bool cscoreblue = false;
     
     Vector2 Circle1 = {300,400};
     Vector2 Circle2 = {500,400};
@@ -40,6 +42,7 @@ int main(void)
     Vector2 Starter = MeasureTextEx(GetFontDefault(),"PRESS ENTER TO START!",20,3);
     Texture2D redball = LoadTexture("assets/redball.png");
     Texture2D blueball = LoadTexture("assets/blueball.png");
+    Texture2D aim = LoadTexture("assets/aim.png");
 
 
     SetTargetFPS(60); 
@@ -92,8 +95,25 @@ int main(void)
             }
             if (timeLeft > 0 )
             {
-                if (CheckCollisionCircles(Circle1, 10, blue, 10)) bluescore++;
-                if (CheckCollisionCircles(Circle2, 10, red, 10)) redscore++;
+                if (CheckCollisionCircles(Circle1, 10, blue, 10)) {
+                   if (cscoreblue == false)
+                   {
+                    bluescore++; 
+                    cscoreblue=true;
+                   }
+                }
+                if (CheckCollisionCircles(Circle2, 10, red, 10)) {
+                    if (cscorered == false)
+                   {
+                    redscore++; 
+                    cscorered=true;
+                   }
+                }
+
+                if (!CheckCollisionCircles(Circle2, 10, red, 10) && !CheckCollisionCircles(Circle1, 10, blue, 10)){
+                    cscoreblue=false;
+                    cscorered = false;
+                }
             }
             
             
@@ -150,8 +170,9 @@ int main(void)
                 DrawTextEx(GetFontDefault(),TextFormat("Blue : %d",bluescore),(Vector2){20,60},20,3,BLUE);
                 DrawTextEx(GetFontDefault(),TextFormat("Red : %d",redscore),(Vector2){20,100},20,3,RED);
                 ClearBackground(BLACK);
-                DrawCircleV(Circle1,10,WHITE);
-                DrawCircleV(Circle2,10,WHITE);
+                DrawTexture(aim,Circle1.x-20,Circle1.y-20,WHITE);
+                DrawTexture(aim,Circle2.x-20,Circle2.y-20,WHITE);
+            
                 DrawLineV(Circle1,Circle2,WHITE);
                 
                 if (shot)
